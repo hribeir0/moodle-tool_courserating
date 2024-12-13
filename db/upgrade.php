@@ -66,5 +66,20 @@ function xmldb_tool_courserating_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2022111300, 'tool', 'courserating');
     }
 
+    // Add Anonymous field.
+    if ($oldversion < 2024121200) {
+        // Define a new boolean field for tool_courserating_summary.
+        $table = new xmldb_table('tool_courserating_rating');
+        $field = new xmldb_field('anonymous', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '0', 'userid');
+
+        // Conditionally launch add field newbooleanfield.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Courserating savepoint reached.
+        upgrade_plugin_savepoint(true, 2024121200, 'tool', 'courserating');
+    }
+
     return true;
 }
