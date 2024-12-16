@@ -114,11 +114,9 @@ class rating_exporter extends persistent_exporter {
         // Remove date information.
         // $result['reviewdate'] = helper::format_date($this->data->timemodified);
         $result['reviewdate'] = '';
-        global $DB;
-        $record = $DB->get_record('tool_courserating_rating', ['id' => $this->data->id]);
-        $anonymous = $record->anonymous;
+        $anonymous = helper::is_anonymous($this->data->id);
         if ($anonymous) {
-            $print = 'anonymous comment';
+            $print = get_string('anonymousreviewer', 'tool_courserating');
             $result['user'] = [];
         }
         $result['anonymous'] = $print;

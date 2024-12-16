@@ -493,4 +493,9 @@ class helper {
     public static function format_flags_in_course_report(?int $nofflags, \stdClass $row): string {
         return $nofflags ? "<span class=\"badge badge-warning\">$nofflags</span>" : '';
     }
+    public static function is_anonymous(int $ratingid): bool {
+        global $DB;
+        $record = $DB->get_record('tool_courserating_rating', ['id' => $ratingid]);
+        return $record->anonymous;
+    }
 }
