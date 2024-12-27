@@ -69,7 +69,11 @@ class rating_updated extends \core\event\base {
             'courseid' => $object->get('courseid'),
             'relateduserid' => $recordold->userid,
             'context' => \context_course::instance($object->get('courseid')),
-            'other' => ['rating' => $object->get('rating'), 'oldrating' => $recordold->rating],
+            'other' => [
+                'rating' => $object->get('rating'),
+                'oldrating' => $recordold->rating,
+                'anonymous' => $object->get('anonymous'),
+            ],
         ]);
         $event->add_record_snapshot($event->data['objecttable'], $object->to_record());
         return $event;

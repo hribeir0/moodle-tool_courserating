@@ -86,7 +86,10 @@ class rating_exporter extends persistent_exporter {
                 'type' => 'array',
                 'optional' => true,
             ],
-            'anonymous' => ['type' => PARAM_INT],
+            'anon' => [
+                'type' => PARAM_BOOL,
+                'default' => 0,
+            ],
         ];
     }
 
@@ -116,10 +119,11 @@ class rating_exporter extends persistent_exporter {
         $result['reviewdate'] = '';
         $anonymous = helper::is_anonymous($this->data->id);
         if ($anonymous) {
-            $print = get_string('anonymousreviewer', 'tool_courserating');
             $result['user'] = [];
+            $result['anon'] = get_string('anonymousreviewer', 'tool_courserating');;
+        } else {
+            $result['anon'] = '';
         }
-        $result['anonymous'] = $print;
         if (permission::can_delete_rating($this->data->id, $this->data->courseid)) {
             $flags = flag::count_records(['ratingid' => $this->data->id]);
         } else {

@@ -52,6 +52,9 @@ class rating extends \core\persistent {
                 'type' => PARAM_INT,
                 'default' => 0,
             ],
+            'anonymous' => [
+                'type' => PARAM_BOOL,
+            ],
         ];
     }
 

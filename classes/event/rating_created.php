@@ -67,7 +67,10 @@ class rating_created extends \core\event\base {
             'courseid' => $object->get('courseid'),
             'relateduserid' => $object->get('userid'),
             'context' => \context_course::instance($object->get('courseid')),
-            'other' => ['rating' => $object->get('rating')],
+            'other' => [
+                'rating' => $object->get('rating'),
+                'anonymous' => $object->get('anonymous'),
+            ],
         ]);
         $event->add_record_snapshot($event->data['objecttable'], $object->to_record());
         return $event;

@@ -26,6 +26,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['addrating'] = 'Leave a rating';
+$string['anonymous'] = 'Anonymous';
 $string['anonymousreviewer'] = 'Anonymous reviewer';
 $string['barwithrating'] = '{$a->rating} star represent {$a->percent} of rating';
 $string['cannotrate'] = 'You don\'t have permission to leave rating to this course';

@@ -50,6 +50,7 @@ class api {
         $userid = $userid ?: $USER->id;
         // TODO validate rating is within limits, trim/crop review.
         $rating = $data->rating;
+        $anonymous = $data->anonymous ?: 0; // Hribeiro hack.
         $ratingold = rating::get_record(['userid' => $userid, 'courseid' => $courseid]);
         if ($ratingold) {
             $oldrecord = $ratingold->to_record();
@@ -57,6 +58,7 @@ class api {
             $review = self::prepare_review($r, $data);
             $r->set('rating', $rating);
             $r->set('review', $review);
+            $r->set('anonymous', $anonymous);
             $r->save();
             $summary = summary::update_rating($courseid, $r, $oldrecord);
         } else {
@@ -64,6 +66,7 @@ class api {
                 'userid' => $userid,
                 'courseid' => $courseid,
                 'rating' => $rating,
+                'anonymous' => $anonymous,
             ]);
             $r->set('review', self::prepare_review(null, $data));
             $r->save();
@@ -186,6 +189,7 @@ class api {
         if ($rating = rating::get_record(['userid' => $USER->id, 'courseid' => $courseid])) {
             $data = $rating->to_record();
             $rv['rating'] = $data->rating;
+            $rv['anonymous'] = $data->anonymous;
             if (helper::get_setting(constants::SETTING_USEHTML)) {
                 $data->reviewformat = FORMAT_HTML;
                 $context = \context_course::instance($courseid);

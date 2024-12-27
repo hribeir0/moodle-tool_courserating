@@ -77,7 +77,8 @@ EOF
         }
         $el = $mform->addGroup($radioarray, 'ratinggroup', get_string('rating', 'tool_courserating'), [' ', ' '], false);
         $el->setAttributes($el->getAttributes() + ['class' => 'tool_courserating-form-stars-group']);
-
+        $mform->addElement('checkbox', 'anonymous', get_string('anonymous', 'tool_courserating'));
+        $mform->setDefault('anonymous', 0);
         if (helper::get_setting(constants::SETTING_USEHTML)) {
             $options = helper::review_editor_options($this->get_context_for_dynamic_submission());
             $mform->addElement('editor', 'review_editor', get_string('review', 'tool_courserating'),
